@@ -27,18 +27,22 @@ function App() {
       <label htmlFor="search">Search: </label>
       <input id="search" type="text" />
       <hr />
-      {list.map(ele => {
-        return (
-          <div key={ele.objectID}>
-            <span><a href={ele.url}>{ele.title}</a></span>&nbsp;
-            <span>{ele.author}</span>&nbsp;
-            <span>{ele.num_comments}</span>&nbsp;
-            <span>{ele.points}</span>&nbsp;
-          </div>
-        );
-      })}
+      <List />
     </div>
   );
+}
+
+function List() {
+  return list.map(ele => {
+    return (
+      <div key={ele.objectID}>
+        <span><a href={ele.url}>{ele.title}</a></span>&nbsp;
+        <span>{ele.author}</span>&nbsp;
+        <span>{ele.num_comments}</span>&nbsp;
+        <span>{ele.points}</span>&nbsp;
+      </div>
+    );
+  });
 }
 
 export default App;
