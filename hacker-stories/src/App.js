@@ -2,7 +2,7 @@ import React from 'react';
 import {List} from './components/list';
 import Search from './components/search';
 
-function App() {
+const App = () => {
 
   return (
     <div>

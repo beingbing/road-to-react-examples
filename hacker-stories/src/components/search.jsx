@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Search() {
+const Search = () => {
     return (
         <React.Fragment>
             <label htmlFor="search">Search: </label>
@@ -8,3 +8,5 @@ export default function Search() {
         </React.Fragment>
     );
 }
+
+export default Search;

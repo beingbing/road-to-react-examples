@@ -19,7 +19,7 @@ const list = [
     }
   ]
 
-export function List() {
+export const List = () => {
     return list.map(ele => {
       return (
         <div key={ele.objectID}>
