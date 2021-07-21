@@ -1,10 +1,4 @@
 import React from 'react';
+import Item from './item';
 
-export const List = ({list}) => list.map(ele =>  (
-  <div key={ele.objectID}>
-    <span><a href={ele.url}>{ele.title}</a></span>&nbsp;
-    <span>{ele.author}</span>&nbsp;
-    <span>{ele.num_comments}</span>&nbsp;
-    <span>{ele.points}</span>&nbsp;
-  </div>
-));
+export const List = ({list}) => list.map(({objectID, ...item}) =>  <Item key={objectID} {...item} />);
