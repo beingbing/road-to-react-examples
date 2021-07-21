@@ -1,10 +1,13 @@
 import React from 'react';
 
-const Search = () => {
+const Search = ({onSearch}) => {
 
     const [searchTerm, setSearchTerm] = React.useState('');
 
-    const handleChange = event => setSearchTerm(event.target.value);
+    const handleChange = event => {
+        setSearchTerm(event.target.value);
+        onSearch(event);
+    };
 
     return (
         <React.Fragment>
