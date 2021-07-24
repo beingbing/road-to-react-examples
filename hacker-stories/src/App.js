@@ -40,6 +40,7 @@ const App = () => {
         id="search"
         onInputChange={handleSearch}
         value={searchTerm}
+        isFocused={false}
       >
         <strong>Search:</strong>
       </InputWithLabel>
