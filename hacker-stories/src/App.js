@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import "./App.css";
-import { ReactComponent as Check } from "./check.svg";
 import { List } from "./components/list";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
 import SearchForm from "./components/searchForm";
@@ -31,6 +30,10 @@ const storiesReducer = (state, action) => {
   }
 };
 
+const getSumComments = (stories) => {
+  return stories.data.reduce((result, value) => result + value.num_comments, 0);
+};
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "react");
 
@@ -57,9 +60,9 @@ const App = () => {
 
   React.useEffect(() => handleFetchStories(), [handleFetchStories]);
 
-  const handleRemoveStory = (objectID) => {
+  const handleRemoveStory = React.useCallback((objectID) => {
     dispatchStories({ type: "REMOVE_STORY", payload: objectID });
-  };
+  }, []);
 
   const handleSearchInput = (event) => {
     setSearchTerm(event.target.value);
@@ -70,9 +73,13 @@ const App = () => {
     event.preventDefault();
   };
 
+  const sumComments = React.useMemo(() => getSumComments(stories), [stories]);
+
   return (
     <div className="container">
-      <h1 className="headline-primary">My Hacker Stories</h1>
+      <h1 className="headline-primary">
+        My Hacker Stories with {sumComments} comments.
+      </h1>
       <SearchForm
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
