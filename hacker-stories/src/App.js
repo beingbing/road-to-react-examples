@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import styles from "./App.module.css";
+import styled from "styled-components";
 import { List } from "./components/list";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
 import SearchForm from "./components/searchForm";
@@ -29,6 +29,20 @@ const storiesReducer = (state, action) => {
       throw new Error();
   }
 };
+
+const StyledContainer = styled.div`
+  height: 100vw;
+  padding: 20px;
+  background: #83a4d4;
+  background: linear-gradient(to left, #b6fbff, #83a4d4);
+  color: #171212;
+`;
+
+const StyledHeadlinePrimary = styled.h1`
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: 2px;
+`;
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "react");
@@ -70,8 +84,8 @@ const App = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.headlinePrimary}>My Hacker Stories</h1>
+    <StyledContainer>
+      <StyledHeadlinePrimary>My Hacker Stories</StyledHeadlinePrimary>
       <SearchForm
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
@@ -83,7 +97,7 @@ const App = () => {
       ) : (
         <List list={stories.data} onRemoveItem={handleRemoveStory} />
       )}
-    </div>
+    </StyledContainer>
   );
 };
 
