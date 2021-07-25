@@ -1,3 +1,5 @@
+import styles from "../App.module.css";
+
 const Item = ({
   title,
   url,
@@ -7,7 +9,7 @@ const Item = ({
   points,
   onRemoveItem,
 }) => (
-  <div key={objectID} className="item">
+  <div key={objectID} className={styles.item}>
     <span style={{ width: "40%" }}>
       <a href={url}>{title}</a>
     </span>
@@ -18,7 +20,7 @@ const Item = ({
       <button
         type="button"
         onClick={() => onRemoveItem(objectID)}
-        className="button button_small"
+        className={`${styles.button} ${styles.buttonSmall}`}
       >
         Dismiss
       </button>
