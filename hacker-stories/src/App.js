@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import "./App.css";
 import { List } from "./components/list";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
 import SearchForm from "./components/searchForm";
@@ -69,14 +70,13 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>My Hacker Stories</h1>
+    <div className="container">
+      <h1 className="headline-primary">My Hacker Stories</h1>
       <SearchForm
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
         onSearchSubmit={handleSearchSubmit}
       />
-      <hr />
       {stories.isError && <p>Something went wrong...</p>}
       {stories.isLoading ? (
         <p>Loading...</p>

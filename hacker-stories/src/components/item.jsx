@@ -7,16 +7,19 @@ const Item = ({
   points,
   onRemoveItem,
 }) => (
-  <div key={objectID}>
-    <span>
+  <div key={objectID} className="item">
+    <span style={{ width: "40%" }}>
       <a href={url}>{title}</a>
     </span>
-    &nbsp;
-    <span>{author}</span>&nbsp;
-    <span>{num_comments}</span>&nbsp;
-    <span>{points}</span>&nbsp;
-    <span>
-      <button type="button" onClick={() => onRemoveItem(objectID)}>
+    <span style={{ width: "30%" }}>{author}</span>
+    <span style={{ width: "10%" }}>{num_comments}</span>
+    <span style={{ width: "10%" }}>{points}</span>
+    <span style={{ width: "10%" }}>
+      <button
+        type="button"
+        onClick={() => onRemoveItem(objectID)}
+        className="button button_small"
+      >
         Dismiss
       </button>
     </span>
