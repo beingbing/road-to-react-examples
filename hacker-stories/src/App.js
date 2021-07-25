@@ -3,25 +3,6 @@ import { List } from "./components/list";
 import InputWithLabel from "./components/InputWithLabel";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
 
-// const initialStories = [
-//   {
-//     title: "React",
-//     url: "https://reactjs.org/",
-//     author: "Jordan Walke",
-//     num_comments: 3,
-//     points: 4,
-//     objectID: 0,
-//   },
-//   {
-//     title: "Redux",
-//     url: "https://redux.js.org",
-//     author: "Dan Abramov, Andrew Clarke",
-//     num_comments: 2,
-//     points: 5,
-//     objectID: 1,
-//   },
-// ];
-
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
 const storiesReducer = (state, action) => {
@@ -47,13 +28,10 @@ const storiesReducer = (state, action) => {
   }
 };
 
-// const getAsyncStories = () =>
-//   new Promise((resolve) =>
-//     setTimeout(() => resolve({ data: { stories: initialStories } }), 2000)
-//   );
-
 const App = () => {
   const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "react");
+
+  const [url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`);
 
   const [stories, dispatchStories] = React.useReducer(storiesReducer, {
     data: [],
@@ -62,9 +40,8 @@ const App = () => {
   });
 
   const handleFetchStories = React.useCallback(() => {
-    if (!searchTerm) return;
     dispatchStories({ type: "STORIES_FETCH_INIT" });
-    fetch(`${API_ENDPOINT}${searchTerm}`)
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         dispatchStories({
@@ -73,7 +50,7 @@ const App = () => {
         });
       })
       .catch(() => dispatchStories({ type: "STORIES_FETCH_FAILURE" }));
-  }, [searchTerm]);
+  }, [url]);
 
   React.useEffect(() => handleFetchStories(), [handleFetchStories]);
 
@@ -81,25 +58,28 @@ const App = () => {
     dispatchStories({ type: "REMOVE_STORY", payload: objectID });
   };
 
-  const handleSearch = (event) => {
+  const handleSearchInput = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // const searchedStories = stories.data.filter((story) =>
-  //   story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const handleSearchSubmit = () => {
+    setUrl(`${API_ENDPOINT}${searchTerm}`);
+  };
 
   return (
     <div>
       <h1>My Hacker Stories</h1>
       <InputWithLabel
         id="search"
-        onInputChange={handleSearch}
+        onInputChange={handleSearchInput}
         value={searchTerm}
         isFocused={false}
       >
         <strong>Search:</strong>
       </InputWithLabel>
+      <button type="button" disabled={!searchTerm} onClick={handleSearchSubmit}>
+        Submit
+      </button>
       <hr />
       {stories.isError && <p>Something went wrong...</p>}
       {stories.isLoading ? (
