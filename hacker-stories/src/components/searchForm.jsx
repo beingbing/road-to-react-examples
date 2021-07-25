@@ -1,30 +1,7 @@
 import InputWithLabel from "./InputWithLabel";
-import styled from "styled-components";
-
-const StyledButton = styled.button`
-  background: transparent;
-  border: 1px solid #171212;
-  padding: 5px;
-  cursor: pointer;
-  transition: all 0.1s ease-in;
-  &:hover {
-    background: #171212;
-    color: #ffffff;
-  }
-`;
-
-const StyledButtonLarge = styled(StyledButton)`
-  padding: 10px;
-`;
-
-const StyledSearchForm = styled.form`
-  padding: 10px 0 20px 0;
-  display: flex;
-  align-items: baseline;
-`;
 
 const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
-  <StyledSearchForm onSubmit={onSearchSubmit}>
+  <form onSubmit={onSearchSubmit} className="search-form">
     <InputWithLabel
       id="search"
       value={searchTerm}
@@ -33,10 +10,14 @@ const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
     >
       <strong>Search:</strong>
     </InputWithLabel>
-    <StyledButtonLarge type="submit" disabled={!searchTerm}>
+    <button
+      type="submit"
+      disabled={!searchTerm}
+      className="button button_large"
+    >
       Submit
-    </StyledButtonLarge>
-  </StyledSearchForm>
+    </button>
+  </form>
 );
 
 export default SearchForm;

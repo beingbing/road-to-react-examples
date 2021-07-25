@@ -1,38 +1,4 @@
-import styled from "styled-components";
-
-const StyledItem = styled.div`
-  display: flex;
-  align-items: center;
-  padding-bottom: 5px;
-`;
-
-const StyledColumn = styled.span`
-  padding: 0 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  a {
-    color: inherit;
-  }
-  width: ${(props) => props.width};
-`;
-
-const StyledButton = styled.button`
-  background: transparent;
-  border: 1px solid #171212;
-  padding: 5px;
-  cursor: pointer;
-  transition: all 0.1s ease-in;
-  &:hover {
-    background: #171212;
-    color: #ffffff;
-  }
-`;
-
-const StyledButtonSmall = styled(StyledButton)`
-  padding: 5px;
-`;
+import { ReactComponent as Check } from "../check.svg";
 
 const Item = ({
   title,
@@ -43,19 +9,23 @@ const Item = ({
   points,
   onRemoveItem,
 }) => (
-  <StyledItem key={objectID}>
-    <StyledColumn width="40%">
+  <div key={objectID} className="item">
+    <span style={{ width: "40%" }}>
       <a href={url}>{title}</a>
-    </StyledColumn>
-    <StyledColumn width="30%">{author}</StyledColumn>
-    <StyledColumn width="10%">{num_comments}</StyledColumn>
-    <StyledColumn width="10%">{points}</StyledColumn>
-    <StyledColumn width="10%">
-      <StyledButtonSmall type="button" onClick={() => onRemoveItem(objectID)}>
-        Dismiss
-      </StyledButtonSmall>
-    </StyledColumn>
-  </StyledItem>
+    </span>
+    <span style={{ width: "30%" }}>{author}</span>
+    <span style={{ width: "10%" }}>{num_comments}</span>
+    <span style={{ width: "10%" }}>{points}</span>
+    <span style={{ width: "10%" }}>
+      <button
+        type="button"
+        onClick={() => onRemoveItem(objectID)}
+        className="button button_small"
+      >
+        <Check height="18px" width="18px" />
+      </button>
+    </span>
+  </div>
 );
 
 export default Item;
