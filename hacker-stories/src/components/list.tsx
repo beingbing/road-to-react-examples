@@ -1,16 +1,72 @@
-import { ListProps } from "../interfaces/types";
+import { ListProps, Stories, Story } from "../interfaces/types";
 import Item from "./Item";
+import React from "react";
+import { sortBy } from "lodash";
 
-const List = ({ list, onRemoveItem }: ListProps) => (
-  <>
-    {list.map(item => (
-      <Item
-        key={item.objectID}
-        item={item}
-        onRemoveItem={onRemoveItem}
-      />
-    ))}
-  </>
-);
+type Sorts = {
+    [NONE: string]: (list: Stories) => Stories;
+    TITLE: (list: Stories) => Stories;
+    AUTHOR: (list: Stories) => Stories;
+    COMMENT: (list: Stories) => Stories;
+    POINT: (list: Stories) => Stories;
+};
+
+const SORTS: Sorts = {
+    NONE: (list) => list,
+    TITLE: (list) => sortBy(list, "title"),
+    AUTHOR: (list) => sortBy(list, "author"),
+    COMMENT: (list) => sortBy(list, "num_comments").reverse(),
+    POINT: (list) => sortBy(list, "points").reverse(),
+};
+
+const List = ({ list, onRemoveItem }: ListProps) => {
+    const [sort, setSort] = React.useState("NONE");
+
+    const handleSort = (sortKey: string) => {
+        setSort(sortKey);
+    };
+
+    const sortFunction = SORTS[sort];
+    const sortedList: Stories = sortFunction(list);
+
+    return (
+        <div>
+            <div style={{ display: "flex" }}>
+                <span style={{ width: "40%" }}>
+                    <button
+                        type="button"
+                        onClick={() => handleSort("TITLE")}
+                        className={`banner ${sort === "TITLE" ? "activeBg" : ""}`}
+                    >
+                        Title
+                    </button>
+                </span>
+                <span style={{ width: "30%" }}>
+                    <button type="button" onClick={() => handleSort("AUTHOR")}
+                        className={`banner ${sort === "AUTHOR" ? "activeBg" : ""}`}>
+                        Author
+                    </button>
+                </span>
+                <span style={{ width: "10%" }}>
+                    <button type="button" onClick={() => handleSort("COMMENT")}
+                        className={`banner ${sort === "COMMENT" ? "activeBg" : ""}`}>
+                        Comments
+                    </button>
+                </span>
+                <span style={{ width: "10%" }}>
+                    <button type="button" onClick={() => handleSort("POINT")}
+                        className={`banner ${sort === "POINT" ? "activeBg" : ""}`}>
+                        Points
+                    </button>
+                </span>
+                <span style={{ width: "10%" }}>Actions</span>
+            </div>
+
+            {sortedList.map((item: Story) => (
+                <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
+            ))}
+        </div>
+    );
+};
 
 export default List;
