@@ -1,6 +1,7 @@
-import InputWithLabel from "./InputWithLabel";
+import { SearchFormProps } from "../interfaces/types";
+import InputWithLabel from "./inputWithLabel";
 
-const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
+const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }: SearchFormProps) => (
   <form onSubmit={onSearchSubmit} className="search-form">
     <InputWithLabel
       id="search"

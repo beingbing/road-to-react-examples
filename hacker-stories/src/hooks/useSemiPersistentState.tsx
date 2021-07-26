@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function useSemiPersistentState(key, initialState) {
+const useSemiPersistentState = (key: string, initialState: string): [string, (newValue: string) => void] => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
@@ -8,4 +8,6 @@ export default function useSemiPersistentState(key, initialState) {
   React.useEffect(() => localStorage.setItem(key, value), [value, key]);
 
   return [value, setValue];
-}
+};
+
+export default useSemiPersistentState;

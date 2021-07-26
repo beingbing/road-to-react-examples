@@ -1,4 +1,6 @@
-const storiesReducer = (state, action) => {
+import { StoriesAction, StoriesState } from "./interfaces/types";
+
+const storiesReducer = (state: StoriesState, action: StoriesAction) => {
   switch (action.type) {
     case "STORIES_FETCH_INIT":
       return { ...state, isLoading: true, isError: false };

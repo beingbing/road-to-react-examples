@@ -20,29 +20,29 @@ const App = () => {
   });
 
   const handleFetchStories = React.useCallback(async () => {
-    dispatchStories({ type: "STORIES_FETCH_INIT" });
+    dispatchStories({ type: 'STORIES_FETCH_INIT' });
     try {
       const result = await axios.get(url);
       dispatchStories({
-        type: "STORIES_FETCH_SUCCESS",
+        type: 'STORIES_FETCH_SUCCESS',
         payload: result.data.hits,
       });
     } catch {
-      dispatchStories({ type: "STORIES_FETCH_FAILURE" });
+      dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
     }
   }, [url]);
 
-  React.useEffect(() => handleFetchStories(), [handleFetchStories]);
+  React.useEffect(() => { handleFetchStories() }, [handleFetchStories]);
 
-  const handleRemoveStory = (objectID) => {
+  const handleRemoveStory = (objectID: string): void => {
     dispatchStories({ type: "REMOVE_STORY", payload: objectID });
   };
 
-  const handleSearchInput = (event) => {
+  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchSubmit = (event) => {
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
     event.preventDefault();
   };
