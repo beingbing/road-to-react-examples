@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 import "./App.css";
 import storiesReducer from "./storiesReducer";
-import { List } from "./components/list";
+import List from "./components/List";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
-import SearchForm from "./components/searchForm";
+import SearchForm from "./components/SearchForm";
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
