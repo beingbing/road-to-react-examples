@@ -20,14 +20,20 @@ const SORTS: Sorts = {
 };
 
 const List = ({ list, onRemoveItem }: ListProps) => {
-    const [sort, setSort] = React.useState("NONE");
+    const [sort, setSort] = React.useState({
+        sortKey: 'NONE',
+        isReverse: false,
+    });
 
     const handleSort = (sortKey: string) => {
-        setSort(sortKey);
+        const isReverse = sort.sortKey === sortKey && !sort.isReverse;
+        setSort({ sortKey, isReverse });
     };
 
-    const sortFunction = SORTS[sort];
-    const sortedList: Stories = sortFunction(list);
+    const sortFunction = SORTS[sort.sortKey];
+    const sortedList = sort.isReverse
+        ? sortFunction(list).reverse()
+        : sortFunction(list);
 
     return (
         <div>
@@ -36,26 +42,26 @@ const List = ({ list, onRemoveItem }: ListProps) => {
                     <button
                         type="button"
                         onClick={() => handleSort("TITLE")}
-                        className={`banner ${sort === "TITLE" ? "activeBg" : ""}`}
+                        className={`banner ${sort.sortKey === "TITLE" ? "activeBg" : ""}`}
                     >
                         Title
                     </button>
                 </span>
                 <span style={{ width: "30%" }}>
                     <button type="button" onClick={() => handleSort("AUTHOR")}
-                        className={`banner ${sort === "AUTHOR" ? "activeBg" : ""}`}>
+                        className={`banner ${sort.sortKey === "AUTHOR" ? "activeBg" : ""}`}>
                         Author
                     </button>
                 </span>
                 <span style={{ width: "10%" }}>
                     <button type="button" onClick={() => handleSort("COMMENT")}
-                        className={`banner ${sort === "COMMENT" ? "activeBg" : ""}`}>
+                        className={`banner ${sort.sortKey === "COMMENT" ? "activeBg" : ""}`}>
                         Comments
                     </button>
                 </span>
                 <span style={{ width: "10%" }}>
                     <button type="button" onClick={() => handleSort("POINT")}
-                        className={`banner ${sort === "POINT" ? "activeBg" : ""}`}>
+                        className={`banner ${sort.sortKey === "POINT" ? "activeBg" : ""}`}>
                         Points
                     </button>
                 </span>
