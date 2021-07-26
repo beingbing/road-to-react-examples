@@ -63,3 +63,8 @@ export type ItemProps = {
     item: Story;
     onRemoveItem: (objectID: string) => void;
 };
+
+export type LastSearchesProp = {
+    lastSearches: string[]
+    onLastSearch: (searchTerm: string) => void
+}
